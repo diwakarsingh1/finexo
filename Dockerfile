@@ -1,15 +1,14 @@
-FROM ubuntu
-
-RUN apt-get update && apt install apache2 -y && apt install systemctl -y
+FROM nginx
 
 WORKDIR /var/www/html
 
-COPY . /var/www/html
 
-EXPOSE 80
+# Remove default Nginx configuration
+#RUN rm /etc/nginx/conf.d/default.conf
 
-ENTRYPOINT ["systemctl"]
+# Copy custom Nginx configuration
+#COPY nginx.conf /etc/nginx/conf.d/
 
 
-CMD ["start","apache2"]
-
+# Copy your website content to the Nginx document root
+COPY . /usr/share/nginx/html
